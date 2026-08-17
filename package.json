@@ -1,0 +1,30 @@
+{
+  "name": "remotexpc-labs",
+  "version": "1.0.0",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "devices": "node examples/01-list-devices.mjs",
+    "tunnel": "node examples/02-tunnel-status.mjs",
+    "info": "node examples/03-device-info.mjs",
+    "battery": "node examples/04-battery-diagnostics.mjs",
+    "syslog": "node examples/05-syslog-stream.mjs",
+    "apps": "node examples/06-apps.mjs",
+    "location": "node examples/07-simulate-location.mjs",
+    "perf": "node examples/08-performance.mjs",
+    "screenshot": "node examples/09-screenshot.mjs",
+    "crashes": "node examples/10-crash-reports.mjs",
+    "all": "node run-all.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Runnable examples for the RemoteXPC workshop — TestMu Conf 2026",
+  "private": "true",
+  "type": "module",
+  "dependencies": {
+    "appium-ios-remotexpc": "^5.14.4"
+  }
+}

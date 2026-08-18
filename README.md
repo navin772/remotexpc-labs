@@ -82,17 +82,22 @@ sudo node start-tunnel.mjs
 Keep that process alive — it owns the tunnel. `sudo` is needed because creating a virtual
 network interface is a privileged operation on every OS. Press Ctrl+C to tear it down.
 
-`start-tunnel.mjs` uses only the library's public API, in the order the README of
-`appium-ios-remotexpc` describes:
+`start-tunnel.mjs` is a **launcher, not an implementation**. It runs the `tunnel-creation`
+script that ships inside `appium-ios-remotexpc` itself, so you get the library's own retry,
+reconnect and cleanup handling. Nothing is copied or reimplemented here — the library
+publishes its `scripts/` directory to npm, so `npm install` already put it on your disk.
 
+It forwards every argument, so the library's own options work:
+
+```bash
+sudo node start-tunnel.mjs --help
+sudo node start-tunnel.mjs --udid 00008030-001E290A3EF2402E
+sudo node start-tunnel.mjs --tunnel-registry-port 42315
+sudo node start-tunnel.mjs --reconnect-retries 0     # 0 = retry forever
 ```
-usbmux → lockdown → CoreDeviceProxy → TUN/IPv6 → RSD → registry
-```
 
-Options: `--udid <udid>` to pick a device, `--port <n>` to move the registry off 42314.
-
-**Already using Appium?** The XCUITest driver ships an equivalent with more retry handling,
-and either one works:
+**Already using Appium?** The XCUITest driver runs the same script through its own plugin
+system, and either route works:
 
 ```bash
 appium driver install xcuitest        # once, if you don't have it

@@ -47,7 +47,7 @@ Exit code is `0` when every check passed and `1` when any failed, so these work 
 ### 2. Install
 
 ```bash
-git clone <this repo>
+git clone https://github.com/navin772/remotexpc-labs.git
 cd remotexpc-labs
 npm install
 ```
@@ -76,12 +76,30 @@ whole point.
 Nothing else works until a tunnel exists. In a **separate terminal**:
 
 ```bash
+sudo node start-tunnel.mjs
+```
+
+Keep that process alive — it owns the tunnel. `sudo` is needed because creating a virtual
+network interface is a privileged operation on every OS. Press Ctrl+C to tear it down.
+
+`start-tunnel.mjs` uses only the library's public API, in the order the README of
+`appium-ios-remotexpc` describes:
+
+```
+usbmux → lockdown → CoreDeviceProxy → TUN/IPv6 → RSD → registry
+```
+
+Options: `--udid <udid>` to pick a device, `--port <n>` to move the registry off 42314.
+
+**Already using Appium?** The XCUITest driver ships an equivalent with more retry handling,
+and either one works:
+
+```bash
 appium driver install xcuitest        # once, if you don't have it
 sudo appium driver run xcuitest tunnel-creation
 ```
 
-Keep that process alive — it owns the tunnel. `sudo` is needed because creating a virtual
-network interface is a privileged operation on every OS.
+Use one or the other, not both — they would fight over port 42314.
 
 Confirm it is published:
 
@@ -115,6 +133,9 @@ Ten examples, about 90 seconds. If all ten pass, your setup is healthy.
 | 08 | `npm run perf` | Per-process CPU and memory from the device |
 | 09 | `npm run screenshot` | Capture the screen to a PNG |
 | 10 | `npm run crashes` | List and pull crash reports |
+
+Plus `sudo node start-tunnel.mjs` at the repo root, which starts the tunnel everything else
+depends on.
 
 ### Useful flags
 
@@ -157,7 +178,7 @@ commit them.
 ## Troubleshooting
 
 **"No device has a live tunnel"** — the tunnel isn't running, or it died. Restart
-`sudo appium driver run xcuitest tunnel-creation` and check `curl http://localhost:42314/remotexpc/tunnels`.
+`sudo node start-tunnel.mjs` and check `curl http://localhost:42314/remotexpc/tunnels`.
 
 **No `Network` row in `npm run devices`** — "Show this device when on WiFi" is off, or the host
 and device are on different networks. Guest WiFi with client isolation blocks this entirely.

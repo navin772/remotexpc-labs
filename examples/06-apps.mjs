@@ -76,7 +76,7 @@ await run(async () => {
 
   console.log();
   note('Not run here, but one call each:');
-  note("  await installProxy.install('./MyApp.ipa')");
+  note("  await (await Services.startZipConduitService(udid)).install('./MyApp.ipa')");
   note("  await installProxy.uninstall('com.example.app')");
   note('That pair is the most reliable way to reset app state between tests.');
   console.log();

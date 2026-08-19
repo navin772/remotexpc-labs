@@ -16,6 +16,7 @@
     "perf": "node examples/08-performance.mjs",
     "screenshot": "node examples/09-screenshot.mjs",
     "crashes": "node examples/10-crash-reports.mjs",
+    "afc": "node examples/11-afc.mjs",
     "all": "node run-all.mjs"
   },
   "keywords": [],

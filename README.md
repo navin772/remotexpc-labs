@@ -120,7 +120,7 @@ curl http://localhost:42314/remotexpc/tunnels
 npm run all
 ```
 
-Ten examples, about 90 seconds. If all ten pass, your setup is healthy.
+Eleven examples, about 90 seconds. If all eleven pass, your setup is healthy.
 
 ---
 
@@ -138,6 +138,7 @@ Ten examples, about 90 seconds. If all ten pass, your setup is healthy.
 | 08 | `npm run perf` | Per-process CPU and memory from the device |
 | 09 | `npm run screenshot` | Capture the screen to a PNG |
 | 10 | `npm run crashes` | List and pull crash reports |
+| 11 | `npm run afc` | Push and pull a file through the AFC file conduit |
 
 Plus `sudo node start-tunnel.mjs` at the repo root, which starts the tunnel everything else
 depends on.
@@ -152,6 +153,8 @@ node examples/08-performance.mjs --samples 5 --app Preferences
 node examples/09-screenshot.mjs --out ./artifacts/before-checkout.png
 node examples/10-crash-reports.mjs --pull ./artifacts/crashes
 node examples/04-battery-diagnostics.mjs --min 30
+node examples/11-afc.mjs --push ./some-fixture.txt
+node examples/11-afc.mjs --keep
 ```
 
 With more than one device connected, pin the one you mean:
@@ -169,10 +172,11 @@ UDID=00008030-001E290A3EF2402E npm run battery
 
 ## What these examples do *not* do
 
-They are read-only apart from launching an app and simulating a location, both of which are
-reversible. Nothing here uninstalls apps, clears the device's crash store, or reboots anything.
-Each of those is a single call and is shown in a comment where relevant, so you can see the
-shape without us mutating your device.
+They are read-only apart from launching an app, simulating a location, and making/removing a
+scratch directory over AFC (example 11) — all reversible, and all undone before exit unless you
+pass `--keep`. Nothing here installs or uninstalls apps, clears the device's crash store, or
+reboots anything. Each of those is a single call and is shown in a comment where relevant, so you
+can see the shape without us mutating your device.
 
 Captured screenshots and pulled crash reports land in `artifacts/`, which is **gitignored** —
 device screenshots contain your account name, WiFi SSID, and whatever is on screen. Don't

@@ -6,6 +6,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "netcheck": "node netcheck.mjs",
     "devices": "node examples/01-list-devices.mjs",
     "tunnel": "node examples/02-tunnel-status.mjs",
     "info": "node examples/03-device-info.mjs",
@@ -17,12 +18,16 @@
     "screenshot": "node examples/09-screenshot.mjs",
     "crashes": "node examples/10-crash-reports.mjs",
     "afc": "node examples/11-afc.mjs",
+    "conditions": "node examples/12-degraded-conditions.mjs",
+    "netenergy": "node examples/13-network-and-energy.mjs",
+    "appearance": "node examples/14-appearance.mjs",
+    "clipboard": "node examples/15-clipboard-and-rotation.mjs",
     "all": "node run-all.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Runnable examples for the RemoteXPC workshop — TestMu Conf 2026",
+  "description": "Runnable examples for the RemoteXPC workshop \u2014 TestMu Conf 2026",
   "private": "true",
   "type": "module",
   "dependencies": {

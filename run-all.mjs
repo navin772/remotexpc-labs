@@ -3,7 +3,7 @@
  *
  *   npm run all
  *
- * Useful as a smoke test of your setup before the workshop: if all ten pass,
+ * Useful as a smoke test of your setup before the workshop: if they all pass,
  * your tunnel and device are healthy.
  */
 import { spawn } from 'node:child_process';

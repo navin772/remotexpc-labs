@@ -120,7 +120,7 @@ curl http://localhost:42314/remotexpc/tunnels
 npm run all
 ```
 
-Eleven examples, about 90 seconds. If all eleven pass, your setup is healthy.
+Fifteen examples, a few minutes. If they all pass, your setup is healthy.
 
 ---
 
@@ -139,9 +139,26 @@ Eleven examples, about 90 seconds. If all eleven pass, your setup is healthy.
 | 09 | `npm run screenshot` | Capture the screen to a PNG |
 | 10 | `npm run crashes` | List and pull crash reports |
 | 11 | `npm run afc` | Push and pull a file through the AFC file conduit |
+| 12 | `npm run conditions` | Force 3G, Edge, 100% packet loss, or thermal pressure |
+| 13 | `npm run netenergy` | Per-process network events and energy metrics |
+| 14 | `npm run appearance` | Dark mode, Dynamic Type, colour filters |
+| 15 | `npm run clipboard` | Set the device clipboard; rotate the screen |
 
 Plus `sudo node start-tunnel.mjs` at the repo root, which starts the tunnel everything else
 depends on.
+
+### Not every device has every service
+
+The service catalog differs by device and by which **Developer Disk Image** is mounted. When an
+example needs something your device does not expose, it prints `SKIPPED` and exits 0 rather
+than failing:
+
+```
+  ○ skipped com.apple.coredevice.configuration is not in this device's service catalog
+```
+
+Examples 17 and 18 need the CoreDevice services, which arrive with a recent DDI. If they skip,
+your DDI is older than the device supports — mounting a newer one adds the services.
 
 ### Useful flags
 
@@ -155,12 +172,15 @@ node examples/10-crash-reports.mjs --pull ./artifacts/crashes
 node examples/04-battery-diagnostics.mjs --min 30
 node examples/11-afc.mjs --push ./some-fixture.txt
 node examples/11-afc.mjs --keep
+node examples/12-degraded-conditions.mjs --set SlowNetwork100PctLoss --hold 20
+node examples/14-appearance.mjs --style light --text-size accessibilityExtraLarge
+node examples/15-clipboard-and-rotation.mjs --text "order-12345"
 ```
 
 With more than one device connected, pin the one you mean:
 
 ```bash
-UDID=00008030-001E290A3EF2402E npm run battery
+UDID=00008030-001E290A3EF24... npm run battery
 ```
 
 ### Try them in this order
